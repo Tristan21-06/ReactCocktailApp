@@ -8,8 +8,9 @@ import {fetchFilters} from "./api/Filter";
 import {fetchCocktailsFromFilters} from "./api/Cocktail";
 import {initializeCocktails} from "./features/cocktail/CocktailSlice";
 import {Container, Nav, Navbar} from "react-bootstrap";
+import {BrowserRouter, Link, Route, Routes, NavLink} from "react-router-dom";
 
-function App({children}) {
+function App() {
     const filters = useSelector(state => state.filter.value);
     const dispatch = useDispatch();
 
@@ -27,34 +28,43 @@ function App({children}) {
                 dispatch(initializeCocktails(fetchedCocktails));
             })
         }
-    }, [filters])
+    }, [filters]);
 
     return (
-        <div className="App">
-            <header>
-                <Navbar>
-                    <Container>
-                        <Navbar.Brand href="/"><img src={logo} className="App-logo" width="50" alt="logo"/></Navbar.Brand>
-                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                        <Navbar.Collapse id="basic-navbar-nav">
-                            <Nav className="me-auto">
-                                <Nav.Link href="/">Accueil</Nav.Link>
-                                <Nav.Link href="/cocktails">Cocktails</Nav.Link>
-                                <Nav.Link href="/my-cocktails">Mes cocktails</Nav.Link>
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Container>
-                </Navbar>
-            </header>
+        <BrowserRouter>
+            <div className="App">
+                <header>
+                    <Navbar>
+                        <Container>
+                            <Link className="navbar-brand" to="/">
+                                <img src={logo} className="App-logo" width="50" alt="logo"/>
+                            </Link>
+                            <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                            <Navbar.Collapse id="basic-navbar-nav">
+                                <Nav className="me-auto">
+                                    <NavLink role="button" className="nav-link" to="/">Accueil</NavLink>
+                                    <NavLink role="button" className="nav-link" to="/cocktails">Cocktails</NavLink>
+                                    <NavLink role="button" className="nav-link" to="/my-cocktails">Mes cocktails</NavLink>
+                                </Nav>
+                            </Navbar.Collapse>
+                        </Container>
+                    </Navbar>
+                </header>
 
-            <main>
-                {children}
-            </main>
+                <main>
+                    <Routes>
+                        <Route path="/" element={<div>Accueil</div>}/>
+                        <Route path="/cocktails" element={<div>Cocktail</div>}/>
+                        <Route path="/cocktails/:id" element={<div>Cocktail id</div>}/>
+                        <Route path="/my-cocktails" element={<div>Mes Cocktails</div>}/>
+                    </Routes>
+                </main>
 
-            <footer>
+                <footer>
 
-            </footer>
-        </div>
+                </footer>
+            </div>
+        </BrowserRouter>
     );
 }
 
