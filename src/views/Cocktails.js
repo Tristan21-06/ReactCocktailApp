@@ -37,7 +37,7 @@ function Cocktails() {
                     </Spinner>
                 ) : (
                     <>
-                        {!cocktails.length || !displayedCocktails.length ? (
+                        {!cocktails.length && !displayedCocktails.length ? (
                             <>
                                 Aucun cocktails à charger
                             </>
