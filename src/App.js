@@ -9,6 +9,7 @@ import {fetchCocktailsFromFilters} from "./api/Cocktail";
 import {initializeCocktails} from "./features/cocktail/CocktailSlice";
 import {Container, Nav, Navbar} from "react-bootstrap";
 import {BrowserRouter, Link, Route, Routes, NavLink} from "react-router-dom";
+import Cocktails from "./views/Cocktails";
 
 function App() {
     const filters = useSelector(state => state.filter.value);
@@ -54,7 +55,7 @@ function App() {
                 <main>
                     <Routes>
                         <Route path="/" element={<div>Accueil</div>}/>
-                        <Route path="/cocktails" element={<div>Cocktail</div>}/>
+                        <Route path="/cocktails" element={<Cocktails />}/>
                         <Route path="/cocktails/:id" element={<div>Cocktail id</div>}/>
                         <Route path="/my-cocktails" element={<div>Mes Cocktails</div>}/>
                     </Routes>

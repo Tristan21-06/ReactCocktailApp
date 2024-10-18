@@ -1,0 +1,27 @@
+main {
+    .container {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        & h2 {
+            margin: 30px;
+            text-align: center;
+        }
+
+        .row {
+            row-gap: 15px;
+
+            .card {
+                .btn-group {
+                    .btn-favorite {
+                        width: fit-content;
+                        flex: none;
+                        border-radius: 30px;
+                    }
+                }
+            }
+        }
+    }
+}
+
