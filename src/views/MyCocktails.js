@@ -1,31 +1,22 @@
 import {useDispatch, useSelector} from "react-redux";
 import {generatePath, Link} from "react-router-dom";
 import {Button, ButtonGroup, Card, Col, Container, Row, Spinner} from "react-bootstrap";
-import {addMyCocktail, removeMyCocktail} from "../features/cocktail/CocktailSlice";
+import {removeMyCocktail} from "../features/cocktail/CocktailSlice";
 import {StarFill} from "react-bootstrap-icons";
 import {useEffect, useState} from "react";
 
-function Cocktails() {
+function MyCocktails() {
     const [isLoading, setIsLoading] = useState(true);
     const [displayedCocktails, setDisplayedCocktails] = useState([]);
-    const cocktails = useSelector(state => state.cocktail.list);
     const myCocktails = useSelector(state => state.cocktail.myCocktails);
 
     const dispatch = useDispatch();
-
-    const toggleFavorite = (cocktail) => {
-        if(myCocktails.includes(cocktail)) {
-            dispatch(removeMyCocktail(cocktail))
-        } else {
-            dispatch(addMyCocktail(cocktail))
-        }
-    }
 
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false);
         }, 2000)
-    }, [cocktails]);
+    }, [myCocktails]);
 
     return (
         <>
@@ -37,28 +28,25 @@ function Cocktails() {
                     </Spinner>
                 ) : (
                     <>
-                        {!cocktails.length && !displayedCocktails.length ? (
+                        {!myCocktails.length && !displayedCocktails.length ? (
                             <>
-                                Aucun cocktails à charger
+                                Aucun cocktails enregistré
                             </>
                         ) : (
                             <>
                                 {/* TODO search form with filters */}
                                 <Row>
-                                    {(displayedCocktails.length ? displayedCocktails : cocktails).map((cocktail, index) => (
+                                    {(displayedCocktails.length ? displayedCocktails : myCocktails).map((cocktail, index) => (
                                         <Col key={index} lg={3} md={6} sm={12}>
                                             <Card color="light" text="light" bg="dark">
                                                 <Button
-                                                    className={
-                                                        "btn-favorite d-flex justify-content-center align-items-center p-2 "
-                                                        + (myCocktails.includes(cocktail) ? "btn-dark" : "btn-outline-dark btn-light")
-                                                    }
-                                                    onClick={() => toggleFavorite(cocktail)}>
+                                                    className="btn-favorite d-flex justify-content-center align-items-center p-2 btn-dark"
+                                                    onClick={() => dispatch(removeMyCocktail(cocktail))}>
                                                     <StarFill></StarFill>
                                                 </Button>
                                                 <Card.Img src={cocktail.strDrinkThumb}/>
-                                                <Card.Header>
-                                                    <Card.Title className="m-0">
+                                                <Card.Header >
+                                                    <Card.Title>
                                                         {cocktail.strDrink}
                                                     </Card.Title>
                                                 </Card.Header>
@@ -71,7 +59,6 @@ function Cocktails() {
                                                             className="text-decoration-none"
                                                         >Voir</Link>
                                                     </ButtonGroup>
-                                                    {/* TODO view button and favorite button */}
                                                 </Card.Body>
                                             </Card>
                                         </Col>
@@ -86,4 +73,4 @@ function Cocktails() {
     );
 }
 
-export default Cocktails;
+export default MyCocktails;

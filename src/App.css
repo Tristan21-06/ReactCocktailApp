@@ -11,14 +11,16 @@ main {
 
         .row {
             row-gap: 15px;
+            width: 100%;
 
             .card {
-                .btn-group {
-                    .btn-favorite {
-                        width: fit-content;
-                        flex: none;
-                        border-radius: 30px;
-                    }
+                .btn-favorite {
+                    width: fit-content;
+                    flex: none;
+                    position: absolute;
+                    right: 5px;
+                    top: 5px;
+                    border-radius: 50px;
                 }
             }
         }
