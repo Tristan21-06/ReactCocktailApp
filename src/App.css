@@ -14,6 +14,8 @@ main {
             width: 100%;
 
             .card {
+                height: 100%;
+
                 .btn-favorite {
                     width: fit-content;
                     flex: none;

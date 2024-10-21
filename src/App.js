@@ -17,7 +17,6 @@ function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log('useEffect filters')
         fetchFilters().then(fetchedFilters => {
             dispatch(initializeFilters(fetchedFilters));
         })
@@ -25,7 +24,6 @@ function App() {
 
     useEffect(() => {
         if(filters.alcoholic?.length) {
-            console.log('useEffect cocktails', filters)
             fetchCocktailsFromFilters("alcoholic", filters.alcoholic).then(fetchedCocktails => {
                 dispatch(initializeCocktails(fetchedCocktails));
             })

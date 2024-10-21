@@ -3,7 +3,7 @@ const filterBaseUrl = new URL("https://www.thecocktaildb.com/api/json/v1/1/list.
 
 export const filterTypes = {
     alcoholic: "a",
-    catergories: "c",
+    categories: "c",
     glasses: "g",
     ingredients: "i",
 };
