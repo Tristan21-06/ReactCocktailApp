@@ -1,20 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {initializeFilters} from "./features/filter/FilterSlice";
 import {useEffect} from "react";
 import {fetchFilters} from "./api/Filter";
-import {fetchCocktailsFromFilters} from "./api/Cocktail";
-import {initializeCocktails} from "./features/cocktail/CocktailSlice";
 import {Container, Nav, Navbar} from "react-bootstrap";
 import {BrowserRouter, Link, Route, Routes, NavLink} from "react-router-dom";
 import Cocktails from "./views/Cocktails/Cocktails";
 import MyCocktails from "./views/Cocktails/MyCocktails";
 import CocktailDetails from "./views/Cocktails/CocktailDetails";
+import Home from "./views/Home/Home";
 
 function App() {
-    const filters = useSelector(state => state.filter.value);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -22,14 +20,6 @@ function App() {
             dispatch(initializeFilters(fetchedFilters));
         })
     }, []);
-
-    useEffect(() => {
-        if(filters.alcoholic?.length) {
-            fetchCocktailsFromFilters("alcoholic", filters.alcoholic).then(fetchedCocktails => {
-                dispatch(initializeCocktails(fetchedCocktails));
-            })
-        }
-    }, [filters]);
 
     return (
         <BrowserRouter>
@@ -54,7 +44,7 @@ function App() {
 
                 <main>
                     <Routes>
-                        <Route path="/" element={<div>Accueil</div>}/>
+                        <Route path="/" element={<Home />}/>
                         <Route path="/cocktails" element={<Cocktails />}/>
                         <Route path="/cocktails/:id" element={<CocktailDetails />}/>
                         <Route path="/my-cocktails" element={<MyCocktails />}/>
