@@ -77,7 +77,7 @@ export const handleSearchForm = async (search, myCocktails) => {
                 ...drinks,
             ];
 
-            nbFilter++;
+            nbFilter += filters[filterType].length;
         }
     }
 
