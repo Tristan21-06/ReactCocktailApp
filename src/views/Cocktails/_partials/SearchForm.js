@@ -8,6 +8,10 @@ function SearchForm({filteredCocktails, setIsLoading, isLoading, setFilteredCock
     const filters = useSelector(state => state.filter.value);
 
     useEffect(() => {
+        document.dispatchEvent(new CustomEvent('react:search-form'))
+    }, []);
+
+    useEffect(() => {
         if (searchObject && Object.keys(searchObject).length) {
             handleSearchForm(searchObject, myCocktails)
                 .then(cocktails => {

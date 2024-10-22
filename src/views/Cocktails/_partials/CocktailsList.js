@@ -31,9 +31,9 @@ function CocktailsList({filteredCocktails, cocktails, isFilterOn}) {
                     </>
                 ) : (
                     <>
-                        {(filteredCocktails.length ? filteredCocktails : cocktails).map((cocktail, index) => (
+                        {(filteredCocktails.length ? filteredCocktails : cocktails)?.map((cocktail, index) => (
                             <Col key={index} xl={3} lg={4} md={6} sm={12}>
-                                <Card color="light" text="light" bg="dark" className="justify-content-between">
+                                <Card color="light" text="light" bg="dark" className="justify-content-between h-100">
                                     <Button
                                         className={
                                             "btn-favorite d-flex w-fit-content justify-content-center align-items-center p-2 "

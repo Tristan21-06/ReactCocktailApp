@@ -27,10 +27,10 @@ export const fetchFilters = async () => {
 }
 
 export const fetchFilter = (type) => {
-    const alcoholicUrl = new URL(filterBaseUrl.href);
-    alcoholicUrl.searchParams.append(type, "list");
+    const filterUrl = new URL(filterBaseUrl.href);
+    filterUrl.searchParams.append(type, "list");
 
-    return axios.get(alcoholicUrl.href)
+    return axios.get(filterUrl.href)
         .then(res => {
             return res.data;
         })

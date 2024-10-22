@@ -60,7 +60,7 @@ export const fetchCocktailsBySearch = (searchString) => {
         ;
 }
 
-export const handleSearchForm = async (search, myCocktails) => {
+export const handleSearchForm = async (search, myCocktails = null) => {
     const filters = search.filters;
     const searchString = search.string;
 
@@ -95,8 +95,9 @@ export const handleSearchForm = async (search, myCocktails) => {
     let mappedMyCocktails = myCocktails?.map(cocktail => cocktail.idDrink);
 
     const filteredCocktails = allCocktails
-        .filter(cocktail =>
-            countOcurrences(cocktail, allCocktails) === nbFilter && (!mappedMyCocktails || mappedMyCocktails.includes(cocktail.idDrink))
+        .filter(
+            cocktail =>
+                countOcurrences(cocktail, allCocktails) === nbFilter && (!mappedMyCocktails || mappedMyCocktails.includes(cocktail.idDrink))
         )
         .map(cocktail => {
             return {
@@ -108,4 +109,21 @@ export const handleSearchForm = async (search, myCocktails) => {
     ;
 
     return removeDuplicates(filteredCocktails);
+}
+
+export const fetchSingleCocktail = (id) => {
+    const cocktailsByIdUrl = new URL("https://www.thecocktaildb.com/api/json/v1/1/lookup.php");
+    cocktailsByIdUrl.searchParams.append("i", id);
+
+    return axios.get(cocktailsByIdUrl.href)
+        .then(res => {
+            if (!res.data?.drinks?.length)
+                return false;
+
+            return res.data.drinks[0];
+        })
+        .catch(error => {
+            console.error(error);
+        })
+        ;
 }
