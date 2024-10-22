@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {handleSearchForm} from "../../api/Cocktail";
 
-function SearchForm({setFilteredCocktails, setIsFilterOn, myCocktails = null}) {
+function SearchForm({filteredCocktails, setIsLoading, isLoading, setFilteredCocktails, setIsFilterOn, myCocktails}) {
     const [searchObject, setSearchObject] = useState({});
     const filters = useSelector(state => state.filter.value);
 
@@ -18,14 +18,23 @@ function SearchForm({setFilteredCocktails, setIsFilterOn, myCocktails = null}) {
         }
     }, [searchObject]);
 
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 2000)
+    }, [filteredCocktails]);
+
     const filterCocktails = (event) => {
         event.preventDefault();
+
+        setIsLoading(true);
 
         const formData = new FormData(event.target);
 
         const category = formData.get('category');
         const alcoholic = formData.get('alcoholic');
         const glass = formData.get('glass');
+        const ingredients = formData.getAll('ingredients');
         const search = formData.get('search');
 
         let searchObject = {filters: {}};
@@ -46,16 +55,19 @@ function SearchForm({setFilteredCocktails, setIsFilterOn, myCocktails = null}) {
             filters++;
         }
 
+
+        if (ingredients.length) {
+            searchObject.filters.ingredients = ingredients;
+            filters += ingredients.length;
+        }
+
         if (search) {
             searchObject.string = search;
             filters++;
         }
 
-        if (filters > 0) {
-            setIsFilterOn(true);
-        } else {
-            resetFilters();
-        }
+        // manage if user submit form with nothing in it
+        filters > 0 ? setIsFilterOn(true) : resetFilters()
 
         setSearchObject({
             ...searchObject
@@ -69,21 +81,21 @@ function SearchForm({setFilteredCocktails, setIsFilterOn, myCocktails = null}) {
 
     return (
         <>
-            <Form className="w-75 my-4 mx-2" onSubmit={(event) => filterCocktails(event)}>
+            <Form className="my-4 mx-2 d-flex flex-column align-items-center" onSubmit={filterCocktails}>
                 <Row className="mb-3">
                     <Col xs={12}>
                         <InputGroup>
                             <FloatingLabel label="Par texte">
-                                <Form.Control type="text" id="search" name="search" />
+                                <Form.Control disabled={isLoading} type="text" id="search" name="search"/>
                             </FloatingLabel>
                         </InputGroup>
                     </Col>
-                    <Col lg={4}>
+                    <Col xs={12}>
                         <InputGroup className="flex-column">
                             <Form.Label htmlFor="category" column="lg">Par catégorie</Form.Label>
-                            <Form.Select id="category" name="category" className="w-100">
+                            <Form.Select disabled={isLoading} id="category" name="category" className="w-100">
                                 <option value="">---</option>
-                                {filters.categories.map((category, index) => (
+                                {filters.categories?.map((category, index) => (
                                     <option key={index} value={category}>
                                         {category}
                                     </option>
@@ -91,12 +103,12 @@ function SearchForm({setFilteredCocktails, setIsFilterOn, myCocktails = null}) {
                             </Form.Select>
                         </InputGroup>
                     </Col>
-                    <Col lg={4}>
+                    <Col xs={12}>
                         <InputGroup className="flex-column">
                             <Form.Label htmlFor="alcoholic" column="lg">Alcool ou non</Form.Label>
-                            <Form.Select id="alcoholic" name="alcoholic" className="w-100">
+                            <Form.Select disabled={isLoading} id="alcoholic" name="alcoholic" className="w-100">
                                 <option value="">---</option>
-                                {filters.alcoholic.map((al, index) => (
+                                {filters.alcoholic?.map((al, index) => (
                                     <option key={index} value={al}>
                                         {al}
                                     </option>
@@ -104,12 +116,25 @@ function SearchForm({setFilteredCocktails, setIsFilterOn, myCocktails = null}) {
                             </Form.Select>
                         </InputGroup>
                     </Col>
-                    <Col lg={4}>
+                    <Col xs={12}>
                         <InputGroup className="flex-column">
                             <Form.Label htmlFor="glass" column="lg">Par type de verre</Form.Label>
-                            <Form.Select id="glass" name="glass" className="w-100">
+                            <Form.Select disabled={isLoading} id="glass" name="glass" className="w-100">
                                 <option value="">---</option>
-                                {filters.glasses.map((glass, index) => (
+                                {filters.glasses?.map((glass, index) => (
+                                    <option key={index} value={glass}>
+                                        {glass}
+                                    </option>
+                                ))}
+                            </Form.Select>
+                        </InputGroup>
+                    </Col>
+                    <Col xs={12}>
+                        <InputGroup className="flex-column">
+                            <Form.Label htmlFor="ingredients" column="lg">Par ingrédients</Form.Label>
+                            <Form.Select disabled={isLoading} id="ingredients" name="ingredients" className="w-100 select2" multiple>
+                                <option value="">---</option>
+                                {filters.ingredients?.map((glass, index) => (
                                     <option key={index} value={glass}>
                                         {glass}
                                     </option>
@@ -119,8 +144,8 @@ function SearchForm({setFilteredCocktails, setIsFilterOn, myCocktails = null}) {
                     </Col>
                 </Row>
                 <ButtonGroup className="gap-3">
-                    <Button type="submit">Rechercher</Button>
-                    <Button type="reset" onClick={resetFilters}>Réinitialiser</Button>
+                <Button disabled={isLoading} type="submit">Rechercher</Button>
+                    <Button disabled={isLoading} type="reset" onClick={resetFilters}>Réinitialiser</Button>
                 </ButtonGroup>
             </Form>
         </>

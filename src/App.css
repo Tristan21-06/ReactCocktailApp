@@ -16,8 +16,11 @@ main {
             .card {
                 height: 100%;
 
+                .card-body-custom {
+                    flex: none;
+                }
+
                 .btn-favorite {
-                    width: fit-content;
                     flex: none;
                     position: absolute;
                     right: 5px;
@@ -29,3 +32,30 @@ main {
     }
 }
 
+.h-fit-content{
+    height: fit-content;
+}
+
+.w-fit-content{
+    width: fit-content;
+}
+
+.select2-container {
+    &.select2 {
+        border: solid 1px rgba(255, 255, 255, 0.3);
+        border-radius:  5px;
+
+        &, & * {
+            background-color: inherit!important;
+        }
+    }
+
+    &, & * {
+        background-color: inherit;
+    }
+
+    &.select2-container--default .select2-results__option--selected {
+        background-color: black!important;
+        color: white;
+    }
+}

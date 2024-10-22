@@ -20,7 +20,7 @@ function CocktailsList({filteredCocktails, cocktails, isFilterOn}) {
 
     return (
         <>
-            <Row>
+            <Row className="h-fit-content">
                 {isFilterOn && !filteredCocktails.length ? (
                     <>
                         <Col>
@@ -33,20 +33,22 @@ function CocktailsList({filteredCocktails, cocktails, isFilterOn}) {
                     <>
                         {(filteredCocktails.length ? filteredCocktails : cocktails).map((cocktail, index) => (
                             <Col key={index} xl={3} lg={4} md={6} sm={12}>
-                                <Card color="light" text="light" bg="dark">
+                                <Card color="light" text="light" bg="dark" className="justify-content-between">
                                     <Button
                                         className={
-                                            "btn-favorite d-flex justify-content-center align-items-center p-2 "
+                                            "btn-favorite d-flex w-fit-content justify-content-center align-items-center p-2 "
                                             + (myCocktails.includes(cocktail) ? "btn-dark" : "btn-outline-dark btn-light")
                                         }
                                         onClick={() => toggleFavorite(cocktail)}>
                                         <StarFill></StarFill>
                                     </Button>
-                                    <Card.Img src={cocktail.strDrinkThumb}/>
-                                    <Card.Header>
-                                        {cocktail.strDrink}
-                                    </Card.Header>
-                                    <Card.Body>
+                                    <div>
+                                        <Card.Img src={cocktail.strDrinkThumb}/>
+                                        <Card.Header>
+                                            {cocktail.strDrink}
+                                        </Card.Header>
+                                    </div>
+                                    <Card.Body className="card-body-custom">
                                         <ButtonGroup
                                             className="d-flex justify-content-around"
                                         >

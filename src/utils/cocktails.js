@@ -3,9 +3,6 @@ export const countOcurrences = (search, array) => {
     array.forEach(el => {
         if (el.idDrink === search.idDrink) {
             count++;
-            if(count === 2) {
-                console.log(search)
-            }
         }
     })
 
@@ -13,8 +10,8 @@ export const countOcurrences = (search, array) => {
 }
 
 export const removeDuplicates = (array) => {
-    let tmp = array.map(el => el.idDrink);
     return array.reduce((a, b) => {
+        let tmp = a.map(el => el.idDrink);
         if (tmp.indexOf(b.idDrink) < 0) a.push(b);
         return a;
     }, []);
