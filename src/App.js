@@ -51,8 +51,10 @@ function App() {
                     </Routes>
                 </main>
 
-                <footer>
-
+                <footer className="p-5">
+                    <p className="text-center">
+                        ITAkademy &copy; Tristan JACQUEMARD
+                    </p>
                 </footer>
             </div>
         </BrowserRouter>

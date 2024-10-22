@@ -1,21 +1,22 @@
 import {Button, ButtonGroup, Card, Col, Row} from "react-bootstrap";
 import {StarFill} from "react-bootstrap-icons";
 import {generatePath, Link} from "react-router-dom";
-import {addMyCocktail, removeMyCocktail} from "../../../features/cocktail/CocktailSlice";
+import {toggleFavorite} from "../../features/cocktail/CocktailSlice";
 import {useDispatch, useSelector} from "react-redux";
 
-
-function CocktailsList({filteredCocktails, cocktails, isFilterOn}) {
+function CocktailsList({filteredCocktails, cocktails, isFilterOn = false}) {
     const dispatch = useDispatch();
 
     const myCocktails = useSelector(state => state.cocktail.myCocktails);
 
-    const toggleFavorite = (cocktail) => {
-        if(myCocktails.includes(cocktail)) {
-            dispatch(removeMyCocktail(cocktail))
-        } else {
-            dispatch(addMyCocktail(cocktail))
+    const checkFavorites = (cocktail) => {
+        cocktail = {
+            idDrink: cocktail.idDrink,
+            strDrink: cocktail.strDrink,
+            strDrinkThumb: cocktail.strDrinkThumb,
         }
+
+        return myCocktails.map(myCocktail => myCocktail.idDrink).includes(cocktail.idDrink);
     }
 
     return (
@@ -31,15 +32,15 @@ function CocktailsList({filteredCocktails, cocktails, isFilterOn}) {
                     </>
                 ) : (
                     <>
-                        {(filteredCocktails.length ? filteredCocktails : cocktails)?.map((cocktail, index) => (
+                        {(filteredCocktails?.length ? filteredCocktails : cocktails)?.map((cocktail, index) => (
                             <Col key={index} xl={3} lg={4} md={6} sm={12}>
                                 <Card color="light" text="light" bg="dark" className="justify-content-between h-100">
                                     <Button
                                         className={
                                             "btn-favorite d-flex w-fit-content justify-content-center align-items-center p-2 "
-                                            + (myCocktails.includes(cocktail) ? "btn-dark" : "btn-outline-dark btn-light")
+                                            + (checkFavorites(cocktail) ? "btn-dark" : "btn-outline-dark btn-light")
                                         }
-                                        onClick={() => toggleFavorite(cocktail)}>
+                                        onClick={() => dispatch(toggleFavorite(cocktail))}>
                                         <StarFill></StarFill>
                                     </Button>
                                     <div>

@@ -1,6 +1,6 @@
 import {Col, Container, Row, Spinner} from "react-bootstrap";
 import SearchForm from "./SearchForm";
-import CocktailsList from "./CocktailsList";
+import CocktailsList from "../../common/CocktailsList";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 

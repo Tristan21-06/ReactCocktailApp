@@ -127,3 +127,19 @@ export const fetchSingleCocktail = (id) => {
         })
         ;
 }
+
+export const fetchRandomCocktail = () => {
+    const randomCocktailUrl = new URL("https://www.thecocktaildb.com/api/json/v1/1/random.php");
+
+    return axios.get(randomCocktailUrl.href)
+        .then(res => {
+            if (!res.data?.drinks?.length)
+                return false;
+
+            return res.data.drinks[0];
+        })
+        .catch(error => {
+            console.error(error);
+        })
+        ;
+}

@@ -3,8 +3,8 @@ import {fetchSingleCocktail} from "../../api/Cocktail";
 import {useParams} from "react-router-dom";
 import {Button, Card, Col, Container, Image, Row, Spinner} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import {addMyCocktail, removeMyCocktail} from "../../features/cocktail/CocktailSlice";
 import {StarFill} from "react-bootstrap-icons";
+import {toggleFavorite} from "../../features/cocktail/CocktailSlice";
 
 function CocktailDetails() {
     const [cocktail, setCocktail] = useState(null);
@@ -27,28 +27,12 @@ function CocktailDetails() {
         if (cocktail) {
             let ingredients = Object.keys(cocktail).filter(key => key.includes('strIngredient') && cocktail[key]).map(key => cocktail[key]);
             setIngredients([...ingredients])
-
-            console.log(cocktail)
         }
 
         setTimeout(() => {
             setIsLoading(false)
         }, 2000)
     }, [cocktail]);
-
-    const toggleFavorite = (cocktail) => {
-        let newMyCocktail = {
-            idDrink: cocktail.idDrink,
-            strDrink: cocktail.strDrink,
-            strDrinkThumb: cocktail.strDrinkThumb,
-        };
-
-        if(myCocktails.includes(newMyCocktail)) {
-            dispatch(removeMyCocktail(newMyCocktail))
-        } else {
-            dispatch(addMyCocktail(newMyCocktail))
-        }
-    }
 
     return (
         <>
@@ -75,7 +59,7 @@ function CocktailDetails() {
                                             <Button
                                                 className={"btn-favorite d-flex w-fit-content justify-content-center align-items-center p-2 "
                                                     + (myCocktails.includes(cocktail) ? "btn-dark" : "btn-outline-dark btn-light")}
-                                                onClick={() => toggleFavorite(cocktail)}
+                                                onClick={() => dispatch(toggleFavorite(cocktail))}
                                             >
                                                 <StarFill></StarFill>
                                             </Button>
@@ -104,7 +88,7 @@ function CocktailDetails() {
                                                     <Card.Body className="d-flex align-items-center">
                                                         {
                                                             cocktail.strAlcoholic === "Alcoholic" ? 'Oui' :
-                                                                (cocktail.strAlcoholic === "Non alcoholic" ? 'Non' : 'Optionel')
+                                                                (cocktail.strAlcoholic === "Non alcoholic" ? 'Non' : 'Optionnel')
                                                         }
                                                     </Card.Body>
                                                 </Card>
