@@ -1,7 +1,7 @@
 import {Button, ButtonGroup, Col, FloatingLabel, Form, InputGroup, Row} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {handleSearchForm} from "../../api/Cocktail";
+import {handleSearchForm} from "../../../api/Cocktail";
 
 function SearchForm({filteredCocktails, setIsLoading, isLoading, setFilteredCocktails, setIsFilterOn, myCocktails}) {
     const [searchObject, setSearchObject] = useState({});

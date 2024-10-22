@@ -9,8 +9,8 @@ import {fetchCocktailsFromFilters} from "./api/Cocktail";
 import {initializeCocktails} from "./features/cocktail/CocktailSlice";
 import {Container, Nav, Navbar} from "react-bootstrap";
 import {BrowserRouter, Link, Route, Routes, NavLink} from "react-router-dom";
-import Cocktails from "./views/Cocktails";
-import MyCocktails from "./views/MyCocktails";
+import Cocktails from "./views/Cocktails/Cocktails";
+import MyCocktails from "./views/Cocktails/MyCocktails";
 
 function App() {
     const filters = useSelector(state => state.filter.value);

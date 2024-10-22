@@ -1,5 +1,5 @@
 import {useSelector} from "react-redux";
-import CocktailsContainer from "./Cocktails/CocktailsContainer";
+import CocktailsContainer from "./_partials/CocktailsContainer";
 
 function MyCocktails() {
     const myCocktails = useSelector(state => state.cocktail.myCocktails);

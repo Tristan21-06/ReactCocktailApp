@@ -1,7 +1,7 @@
 import {Button, ButtonGroup, Card, Col, Row} from "react-bootstrap";
 import {StarFill} from "react-bootstrap-icons";
 import {generatePath, Link} from "react-router-dom";
-import {addMyCocktail, removeMyCocktail} from "../../features/cocktail/CocktailSlice";
+import {addMyCocktail, removeMyCocktail} from "../../../features/cocktail/CocktailSlice";
 import {useDispatch, useSelector} from "react-redux";
 
 
